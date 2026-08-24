@@ -1,0 +1,80 @@
+class ParkingLot:
+    totalCapacity: int
+    spots: Spots[]
+    activeTickets: Map<String, Ticket>  // ticketId -> Ticket for quick lookup
+    hourlyRate: int  // in cents to avoid float precision issues
+
+    // Single entry point — finds spot, creates ticket, marks spot occupied
+    enter(vehicleType): returns Ticket | NULL
+
+    // Single exit point — validates ticket, calculates fee, frees spot, invalidates ticket
+    exit(ticketId): returns Amount | NULL  // returns null for invalid/already-used ticket
+
+    checkCurrentOccupied(): returns Spots[]
+
+    // getter methods for data analytics filtering by vehicle type etc.
+    getOccupiedSpotsByVehicleType(vehicleType): returns Spots[]
+
+    // private helpers — not exposed publicly, used internally by enter/exit
+    private getAvailableSpot(vehicleType): returns Spots | NULL
+    private calculateBilling(Ticket, exitTime): returns Amount
+    private freeSpot(spotId): returns TRUE | FALSE
+
+
+class Spots:
+    id: string
+    vehicleType: VehicleType
+    isOccupied: boolean  // ParkingLot manages this directly
+
+    // Spot is a simpler data holder — occupancy state managed by ParkingLot
+    getId(): returns string
+    getVehicleType(): returns VehicleType
+    isAvailable(): returns boolean
+
+
+class Ticket:
+    id: string
+    spotId: string       // store as string reference, not direct Spot object
+    vehicleType: VehicleType
+    startTime: long      // epoch millis for accurate duration calculation
+    isActive: boolean    // used by exit() to reject already-used tickets
+
+    // Ticket is immutable after creation — just getters
+    getId(): returns string
+    getSpotId(): returns string
+    getVehicleType(): returns VehicleType
+    getStartTime(): returns long
+    isActive(): returns boolean
+
+    // called internally by ParkingLot.exit() as part of the exit flow, not standalone
+    invalidateTicket(): returns true | false
+
+
+class Billing:
+    ticketId: string
+    startTime: long
+    endTime: long        // now clearly tied to startTime for duration calculation
+    amountDue: int       // in cents
+    isPaid: boolean
+    paidBy: User
+
+    getBill(ticketId): returns Billing
+    // rate is passed in from ParkingLot which owns the hourlyRate
+    calculateRate(startTime, endTime, hourlyRate): returns int  // returns amount in cents
+
+
+class User:
+    id: string
+    name: string
+    occupiedSpots: Spots[]
+    remainingAmountToPay: int  // in cents
+
+    getOccupiedSpots(): returns Spots[]
+    getRemainingAmount(): returns int
+
+
+enum VehicleType:
+    MOTORCYCLE
+    CAR
+    LARGE
+

@@ -1,0 +1,17 @@
+Design an elevator control system for a building. The system should handle multiple elevators, floor requests, and move elevators efficiently to service requests."
+
+
+Follow UP Question
+
+1. Do we need to consider the weight limit in the elevator
+2. How User will choose the Floor if user able to select the floor from the inside of the elevator
+   then can user change the selection or deselect the selection
+3. will use choose the direction that he needs to go ?
+4. how elevator should priotize the requests ( first come first serve)
+5. what are the failure cases in the elevator
+6. how many elevators at the floors can it be diff for each floor
+7. what option will user have inside of the elevator
+8. are we targeting the concurrent user request
+9. what will be the travel time between two floor
+
+
