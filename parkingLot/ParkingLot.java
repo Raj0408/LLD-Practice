@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 // OWNER(Raj Kaneriya raj0408)
 public final class ParkingLot {
@@ -47,8 +48,15 @@ lass ParkingLot:
     public Ticket Enter(VechicleType vechicleType){
 
         
-        List<Spot> availabeSpots = this.spots
-        return null;
+        List<Spot> availabeSpots = this.spots.stream().filter(spot -> spot.vechicleType == vechicleType).filter(spot -> spot.OccupiedBy == null).collect(Collectors.toList());
+        if(availabeSpots.isEmpty()){
+            return null;
+        }
+
+        // lock
+        Ticket t = new Ticket(1,new Date());
+
+        
     }
 
     public int getTotalCapacity() {
