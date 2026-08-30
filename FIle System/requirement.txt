@@ -1,0 +1,50 @@
+Design an in-memory file system that supports creating files and directories, navigating paths, and basic file operations like move and rename
+
+
+Supported Operations:
+
+    Create a file or directory at a given path
+
+    Delete a file or directory (permanently, no recovery)
+
+    List contents of a directory
+
+    Rename a file or directory
+
+    Move a file or directory to a new location
+
+    Read a file's content
+
+    Write (overwrite) a file's content
+
+
+Validation & Error Handling:
+
+
+    Throw specific exceptions for invalid operations, including:
+
+    Missing parent directory when creating an entry
+
+    Name collision (entry already exists at target path)
+
+    Attempting to delete the root directory
+
+    Moving a directory into one of its own descendants
+
+
+Out of Scope:
+
+
+    Persistence, disk I/O
+
+    Concurrent/parallel operations
+
+    User permissions or access control
+
+    Relative paths, symbolic links, timestamps
+
+    File recovery or space management
+
+    Search functionality
+
+Scale: Should handle tens of thousands of entries in memory.

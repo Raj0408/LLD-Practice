@@ -1,5 +1,7 @@
 package parkingLot;
 
+import java.util.Date;
+
 public class Ticket {
     String id;
     Date startTime;
